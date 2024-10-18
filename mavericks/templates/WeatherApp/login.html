@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+        <title>Sky Predict</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+    <style>
+        /* Style the admin access checkbox */
+        .admin-access-label {
+            display: block;
+            position: relative;
+            padding-left: 30px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            user-select: none;
+        }
+
+        .admin-access-label input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+            border-radius: 50%;
+        }
+
+        .admin-access-label:hover input ~ .checkmark {
+            background-color: #ccc;
+        }
+
+        .admin-access-label input:checked ~ .checkmark {
+            background-color: #2196F3;
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .admin-access-label input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .admin-access-label .checkmark:after {
+            top: 9px;
+            left: 9px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <form action="{% url 'login' %}" method="post" class="login-form">
+            <div class="container">
+                {% csrf_token %}
+                <h2>Login</h2>
+                <label><b>Username</b></label>
+                {{form.username}}                
+                <label><b>Password</b></label>
+                {{form.password}}
+                <label>
+                    <input type="checkbox" name="admin_access"> Admin Access
+                </label>                
+                <button type="submit">Login</button>
+                <label>
+                    <input type="checkbox" checked="checked"> Remember me
+                </label>
+                <span class="psw">Forgot <a href="#">password?</a></span>
+                <div style="margin-top: 20px;">
+                <p style="display: inline;">Don't have an account? Sign up now!</p>
+                <a id='reg' href="{% url 'register'%}" style="display: inline; margin-left: 10px;">Sign Up</a>
+                </div>
+            </div>
+            {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ form.errors }}
+        </div>
+            {% endif %}
+        </form>
+    </div>
+
+</body>
+
+</html>

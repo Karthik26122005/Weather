@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Predict - Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* Add this inline or in your external CSS file */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logout-btn {
+            background-color: #ff4b5c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .logout-btn:hover {
+            background-color: #ff1e38;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <h1>AI-Powered Weather & Business Risk Dashboard</h1>
+        <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+    </div>
+
+    <!-- Weather Section -->
+    <div class="weather-section">
+        <h2>Weather Forecast</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Temperature (°C)</th>
+                    <th>Chance of Rain (%)</th>
+                    <th>Wind Speed (kph)</th>
+                    <th>UV Index</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for forecast in hourly_forecast %}
+                <tr>
+                    <td>{{ forecast.time }}</td>
+                    <td>{{ forecast.temperature }}</td>
+                    <td>{{ forecast.chance_of_rain }}</td>
+                    <td>{{ forecast.wind_speed }}</td>
+                    <td>{{ forecast.uv_index }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>Best Time Intervals for Outdoor Activities</h3>
+        <ul>
+            {% for interval in time_intervals %}
+            <li>{{ interval }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Business Section -->
+    <div class="business-section">
+        <h2>Business Data</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Business Name</th>
+                    <th>Operation Type</th>
+                    <th>Revenue Loss</th>
+                    <th>Risk Level</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for business in business_data %}
+                <tr>
+                    <td>{{ business.business_name }}</td>
+                    <td>{{ business.operation_type }}</td>
+                    <td>{{ business.revenue_loss }}</td>
+                    <td>{{ business.risk_level }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Risk Assessment Section -->
+    <div class="risk-section">
+        <h2>Risk Assessment</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Business</th>
+                    <th>Risk Score</th>
+                    <th>Recommendation</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for risk in risk_assessment %}
+                <tr>
+                    <td>{{ risk.business_data.business_name }}</td>
+                    <td>{{ risk.risk_score }}</td>
+                    <td>{{ risk.recommendation }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
