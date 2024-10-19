@@ -41,3 +41,27 @@ class RiskAssessment(models.Model):
 
     def __str__(self):
         return f"Risk Score: {self.risk_score} for {self.business_data.business_name}"
+class WeatherDataRecords(models.Model):
+    date = models.DateTimeField()
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    temperature = models.FloatField()
+    precipitation = models.FloatField()
+    wind_speed = models.FloatField()
+    wind_direction = models.FloatField()
+    risk_level = models.CharField(max_length=50)
+    strategic_decision = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ['-date']
+
+    def __str__(self):
+        return f"Weather data for {self.date} at ({self.latitude}, {self.longitude})"
+
+class Location(models.Model):
+    name = models.CharField(max_length=100)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+
+    def __str__(self):
+        return self.name
